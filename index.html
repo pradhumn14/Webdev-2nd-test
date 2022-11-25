@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Blocks</title>
+
+
+    <style>
+        .gole{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+    background-color: aliceblue;
+    width: 25%;
+    height: 40px;
+    margin-top: 20px;
+    border-radius: 0 0 10px 10px;
+}
+
+.circle-1{
+    border: 2px solid gray;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.circle-2{
+    border: 2px solid pink;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.circle-3{
+    border: 2px solid blue;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.circle-4{
+    border: 2px solid rgb(55, 253, 55);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.circle-5{
+    border: 2px solid black;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.gray{
+    background-color: gray;
+}
+
+.pink{
+    background-color: pink;
+}
+
+.blue{
+    background-color: rgb(7, 7, 243);
+}
+
+.green{
+    background-color: rgb(55, 253, 55);
+}
+
+.black{
+    background-color: black;
+}
+    </style>
+
+</head>
+
+
+<body id="bdy">
+
+    <div style = "max-width: 80%; margin: 0 auto 0 auto; border: 5px solid #d3d3d3; padding: 20px 10px">
+        <h3 style = "text-align: center; text-decoration: underline;">Search Your Favourite Movies</h3>
+        <input type = "text" id = "movie" placeholder = "Search here..." />
+        <button id = "submit" onclick="loadDoc()">Submit</button>
+
+        
+    </div>
+
+    <br>
+    <br>
+    
+    <div class="gole">
+        <button class="circle-1" onclick="changeBackground('gray')"></button>
+        <button class="circle-2" onclick="changeBackground('pink')"></button>
+        <button class="circle-3" onclick="changeBackground('blue')"></button>
+        <button class="circle-4" onclick="changeBackground('green')"></button>
+        <button class="circle-5" onclick="changeBackground('black')"></button>
+    </div>
+
+    <script>    
+        
+
+        function changeBackground(my_color){
+
+
+            document.getElementById('bdy').style.background = my_color
+
+
+        }
+
+    </script>
+
+
+    <br>
+    <br>
+
+    <div style = "max-width: 80%; margin: 0 auto 0 auto; border: 5px solid #d3d3d3; padding: 20px 10px">
+        <div id = "demo"></div>
+    </div>
+    
+    
+
+
+        <script>
+            function loadDoc() {
+    
+                var name = document.getElementById('movie').value;
+                document.getElementById('demo').innerHTML = '';
+                var xhttp = new XMLHttpRequest();
+    
+                xhttp.onreadystatechange = function() {
+    
+                    if (this.readyState == 4 && this.status == 200) {
+    
+                        var response = JSON.parse(this.responseText);
+    
+                        for(var i = 0; i < response.length; i++){
+    
+                            let r = response[i].show.image.medium;
+                            document.getElementById('demo').innerHTML = document.getElementById('demo').innerHTML + `<img src ='${r}' />`;
+                        }
+                    }
+                };
+                xhttp.open("GET", `https://api.tvmaze.com/search/shows?q=${name}`, true);
+                xhttp.send();
+            }
+        </script>
+    
+
+</body>
+</html>
